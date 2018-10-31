@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>LaBoat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+
+	 Logged: <span sec:authentication="${user.userName}"></span>
+	 Roles: <span sec:authentication="principal.authorities"></span>
+
+	<div class="col-md-4">
+		<h1>Boatlist</h1>
+			
+	<!-- lisää kirjautunut kuka ja logout kaikille sivuille-->
+	
+			
+	</div>
+	<div class="col-md-4">
+<!-- 		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3> -->
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign out" class="btn btn-danger"/>
+		</form>
+	</div>
+    <table class="table table-striped">
+		<tr>
+		    <th>Name</th>
+		    <th>Model</th>
+		    <th>Year</th>
+		    <th>Type</th>
+		 	<th>Price</th>
+		 	<th>Location</th>
+		    <th>Length</th>
+		    <th>Width</th>
+		    <th></th>
+		</tr>  
+    	<tr th:each = "boat : ${boats}">
+    		<td th:text="${boat.name}"></td>
+    		<td th:text="${boat.model}"></td>
+    		<td th:text="${boat.year}"></td>
+    		<td th:text="${boat.type.typeName}"></td>
+    		<td th:text="${boat.price}"></td>
+    		<td th:text="${boat.location}"></td>
+    		<td th:text="${boat.length}"></td>
+    		<td th:text="${boat.width}"></td>
+			<td sec:authorize="hasAuthority('ADMIN')" ><a th:href="@{/deleteboat/{bID}(bID=${boat.bID})}" class="btn btn-danger">Delete</a></td>
+    	</tr>
+     </table>
+     <br>
+	 <a href="/addboat" class="btn btn-success">Add new boat</a> 	
+</body>
+</html>

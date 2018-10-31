@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>LaBoat Add Boat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Add new boat</h1>
+	
+	<!-- lisää kirjautunut kuka ja logout kaikille sivuille-->
+	
+	
+	<div>
+		<div class="col-md-4">
+		<form th:object="${boat}" th:action="@{saveboat}" action="#" method="post">
+		
+		  	<label for="name">Name:</label>
+			<input type="text" id="name" th:field="*{name}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	
+		  	<label for="model">Model:</label>
+			<input type="text" id="model" th:field="*{model}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<label for="year">Year:</label>
+			<input type="text" id="year" th:field="*{year}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>		
+			
+			<div style="clear: both; display: block; height: 10px;"></div>						
+		  	<label for="typelist">Type:</label>
+			 <select id="typelist" th:field="*{type}" class="form-control">
+       			<option  th:each="type: ${types}" th:value="${type.tID}" th:text="${type.typeName}"></option>
+    		</select>
+
+    		<label for="price">Price:</label>
+			<input type="text" id="price" th:field="*{price}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>		
+			
+			<label for="location">Location:</label>
+			<input type="text" id="location" th:field="*{location}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			
+			<label for="length">Length:</label>
+			<input type="text" id="length" th:field="*{length}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			
+			<label for="width">Width:</label>
+			<input type="text" id="width" th:field="*{width}" class="form-control"/>
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			<input type="submit" class="btn btn-success" value="Save"></input>
+		</form>
+		</div>
+	</div>
+</body>
+</html>
