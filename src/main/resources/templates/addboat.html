@@ -3,7 +3,12 @@
 <head>
     <title>LaBoat Add Boat</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+    
+    <!-- CSS EI TOIMI -->
+    <!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
+    
+    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css"/>       
+	<!-- VANHA: <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" /> -->    
 </head>
 <body>
 	<h1>Add new boat</h1>
@@ -54,5 +59,9 @@
 		</form>
 		</div>
 	</div>
+	
+	<!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
+    <script src="/jquery/jquery-3.3.1.min.js"></script>    
+	<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
