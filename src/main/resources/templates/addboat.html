@@ -1,67 +1,66 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
+<head>	
+    <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>    
+	<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/> 
+
     <title>LaBoat Add Boat</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <!-- CSS EI TOIMI -->
-    <!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
-    
-    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css"/>       
-	<!-- VANHA: <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" /> -->    
+ 
 </head>
+
 <body>
-	<h1>Add new boat</h1>
-	
-	<!-- lisää kirjautunut kuka ja logout kaikille sivuille-->
-	
+	<!--  
+	<div class="col-md-4">
+		 Logged: <span sec:authentication="${user.userName}"></span>
+		 Role: <span sec:authentication="principal.authorities"></span>
+	</div>
+	-->
+	<div class="col-md-4">
+		<h1>Add new boat</h1>		
+	</div>
 	
 	<div>
 		<div class="col-md-4">
-		<form th:object="${boat}" th:action="@{saveboat}" action="#" method="post">
-		
-		  	<label for="name">Name:</label>
-			<input type="text" id="name" th:field="*{name}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>
-		  	
-		  	<label for="model">Model:</label>
-			<input type="text" id="model" th:field="*{model}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<form th:object="${boat}" th:action="@{saveboat}" action="#" method="post">
 			
-			<label for="year">Year:</label>
-			<input type="text" id="year" th:field="*{year}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>		
-			
-			<div style="clear: both; display: block; height: 10px;"></div>						
-		  	<label for="typelist">Type:</label>
-			 <select id="typelist" th:field="*{type}" class="form-control">
-       			<option  th:each="type: ${types}" th:value="${type.tID}" th:text="${type.typeName}"></option>
-    		</select>
-
-    		<label for="price">Price:</label>
-			<input type="text" id="price" th:field="*{price}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>		
-			
-			<label for="location">Location:</label>
-			<input type="text" id="location" th:field="*{location}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>	
-			
-			<label for="length">Length:</label>
-			<input type="text" id="length" th:field="*{length}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>	
-			
-			<label for="width">Width:</label>
-			<input type="text" id="width" th:field="*{width}" class="form-control"/>
-			<div style="clear: both; display: block; height: 10px;"></div>	
-			
-			<div style="clear: both; display: block; height: 10px;"></div>	
-			<input type="submit" class="btn btn-success" value="Save"></input>
-		</form>
+			  	<label for="name">Name:</label><input type="text" id="name" th:field="*{name}" th:value="*{name}" class="form-control"/>
+			  	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+			  	<div style="clear: both; display: block; height: 10px;"></div>
+			  	
+			  	<label for="model">Model:</label><input type="text" id="model" th:field="*{model}" th:value="*{model}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				
+				<label for="year">Year:</label><input type="text" id="year" th:field="*{year}" th:value="*{year}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>		
+				
+				<div style="clear: both; display: block; height: 10px;"></div><label for="typelist">Type:</label>
+				<select id="typelist" th:field="*{type}" class="form-control">
+	       			<option  th:each="type: ${types}" th:value="${type.tID}" th:text="${type.typeName}"></option>
+	    		</select>
+	
+	    		<label for="price">Price:</label><input type="text" id="price" th:field="*{price}" th:value="*{price}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>		
+				
+				<label for="location">Location:</label><input type="text" id="location" th:field="*{location}" th:value="*{location}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>	
+				
+				<label for="length">Length:</label><input type="text" id="length" th:field="*{length}" th:value="*{length}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('length')}" th:errors="*{length}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>	
+				
+				<label for="width">Width:</label><input type="text" id="width" th:field="*{width}" th:value="*{width}"  class="form-control"/>
+				<span th:if="${#fields.hasErrors('width')}" th:errors="*{width}">Error</span>
+				<div style="clear: both; display: block; height: 10px;"></div>	
+				
+				<div style="clear: both; display: block; height: 10px;"></div><input type="submit" class="btn btn-success" value="Save"></input>
+			</form>
 		</div>
 	</div>
-	
-	<!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
-    <script src="/jquery/jquery-3.3.1.min.js"></script>    
-	<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -3,10 +3,13 @@ package app.laboat.web;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,10 +59,18 @@ public class BoatController {
     
     //veneen tallennus
     @PostMapping("/saveboat")
-    public String saveBoat(Boat boat) {
+    public String saveBoat(@Valid Boat boat, BindingResult bindingResult, Model model) {
+    	
+        if (bindingResult.hasErrors()) {
+        	model.addAttribute("types",typeRepository.findAll());
+            return "addboat";
+        } else {
     	boatRepository.save(boat);
     	return "redirect:boatlist";
+        }
     }
+    
+
     
     //poisto
     @RequestMapping(value="/deleteboat/{bID}", method=RequestMethod.GET)

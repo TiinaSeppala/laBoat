@@ -14,17 +14,71 @@ import app.laboat.service.UserDetailServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	/* BOOTSTRAP PITÄIS SAADA TOIMIMAAN
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		.antMatchers("/webjars/**").permitAll()
+		.antMatchers("/img/**")
+		.permitAll().anyRequest()
+		.authenticated()
+		.and()
+		.httpBasic()
+		.and()
+		.formLogin()
+		.loginPage("/login").permitAll();
+		http.csrf().disable();
+		
+	TAI	
+		
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+          .addResourceHandler("/webjars/**")
+          .addResourceLocations("/webjars/");
+    }
+	*/
+	
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//			.authorizeRequests()
+//				.antMatchers("/webjars/**","/signup").permitAll()
+//				.and()
+//				.authorizeRequests()
+//				.antMatchers("/", "addboat", "saveboat", "boatlist").permitAll()
+//				.antMatchers("deleteboat/{bID}").hasRole("ADMIN")
+//				.anyRequest().authenticated()
+//				 .and()
+//			 .formLogin()
+//				 .loginPage("/login")
+//				 .defaultSuccessUrl("/boatlist")
+//				 .permitAll()
+//				 .and()
+//			  .logout()
+//				.permitAll();
+//				//.invalidateHttpSession(true); // Invalidate session
+//    }
+//    
+//    @Autowired
+//    private UserDetailServiceImpl userDetailsService;
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//    	auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+//    }
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        .authorizeRequests().antMatchers("/css/**","/signupform").permitAll()
+        .authorizeRequests().antMatchers("/webjars/**").permitAll() // Enable css when logged out
         .and()
-        .authorizeRequests()
-        .antMatchers("/", "addboat", "saveboat", "boatlist").permitAll()
-        .antMatchers("deleteboat/{bID}").hasRole("ADMIN")
-        .anyRequest().authenticated()
-          .and()
+        .authorizeRequests().antMatchers("/signup", "/saveuser").permitAll()
+        .and()
+        .authorizeRequests().anyRequest().authenticated()
+        .and()
       .formLogin()
           .loginPage("/login")
           .defaultSuccessUrl("/boatlist")
@@ -32,13 +86,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
       .logout()
           .permitAll();
-//          .invalidateHttpSession(true); // Invalidate session
     }
-    @Autowired
-    private UserDetailServiceImpl userDetailsService;
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    	auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-    }
-}
+    
+  @Autowired
+  private UserDetailServiceImpl userDetailsService;
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  	auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+  }
+}	
+
 

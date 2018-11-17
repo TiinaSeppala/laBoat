@@ -6,26 +6,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Boat {
-	
-	
-	// validointi PUUTTUU + kommentit mitä mikäki osa tekee!!
-	
-	
-	
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long bID;
+    
+    @NotNull
+    @Size(min=1, message = "* can't be empty")
     private String name;
+    
+    @NotNull
+    @Size(min=1, message = "* can't be empty")
     private String model;
+    
+    @NotNull
+    @Positive(message = "* value can't be negative")
+    @Min(value = 1800, message = "* your boat is too old for our database or try atleast 4 numbers")
+    @Max(value = 2019, message = "* your boat is from future or try to input year with 4 numbers")
     private int year;
+    
+    @NotNull
+    @Positive(message = "* value can't be negative")
     private int price;
+    
+    @NotNull
+    @Size(min=2, message="* location should have atleast 2 characters")    
     private String location;
+    
+    @NotNull
+    @Positive(message = "* value can't be negative")
     private double length;
+    
+    @NotNull
+    @Positive(message = "* value can't be negative")
     private double width;
     
     @ManyToOne

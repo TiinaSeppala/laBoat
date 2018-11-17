@@ -24,12 +24,13 @@ public class UserController {
 	public String login() {
 		return "login";
 	}
-    @RequestMapping(value = "signupform")
-    public String addStudent(Model model){
+    @RequestMapping(value = "signup")
+    public String addUser(Model model){
     	model.addAttribute("signupform", new SignUpForm());
-        return "signupform";
+        return "signup";
     }	
     
+
 // Luo uusi käyttäjä
 // Tarkista onko käyttäjä jo olemassa
 // Lomakkeen validointi
@@ -39,23 +40,17 @@ public class UserController {
 
     @RequestMapping(value = "saveuser", method = RequestMethod.POST)
     public String save(@Valid @ModelAttribute("signupform") SignUpForm signupForm, BindingResult bindingResult) {
-    	
-    	// validointivirheet
-    	if (!bindingResult.hasErrors()) {
-    		
-    		// tarkista salasanojen mätsäys
-    		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { 	
-	    		String password = signupForm.getPassword();
+    	if (!bindingResult.hasErrors()) { // virheiden validointi
+    		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { // mätsääkö salasana	
+	    		String pwd = signupForm.getPassword();
 		    	BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		    	String hashPassword = bc.encode(password);
+		    	String hashPwd = bc.encode(pwd);
 	
 		    	User newUser = new User();
-		    	newUser.setPasswordHash(hashPassword);
+		    	newUser.setPasswordHash(hashPwd);
 		    	newUser.setUsername(signupForm.getUsername());
 		    	newUser.setRole("USER");
-		    	
-		    	// Tarkista löytyykö käyttäjää
-		    	if (userRepository.findByUsername(signupForm.getUsername()) == null) { 
+		    	if (userRepository.findByUsername(signupForm.getUsername()) == null) { // Onko käyttäjää olemassa
 		    		userRepository.save(newUser);
 		    	}
 		    	else {
@@ -72,6 +67,43 @@ public class UserController {
     		return "signup";
     	}
     	return "redirect:/login";    	
-    }    
+    }
+    
+    
+    
+    
+//    @RequestMapping(value = "/saveuser", method = RequestMethod.POST)
+//    public String saveUser(@Valid @ModelAttribute("signupform") SignUpForm signupForm, BindingResult bindingResult) {
+//		
+// 	   if (!bindingResult.hasErrors()) {
+// 		// tarkista salasanojen mätsäys
+//    		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { 	
+//	    		String password = signupForm.getPassword();
+//		    	BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+//		    	String hashPassword = bc.encode(password);
+//	
+//		    	User newUser = new User();
+//		    	newUser.setPasswordHash(hashPassword);
+//		    	newUser.setUsername(signupForm.getUsername());
+//		    	newUser.setRole("USER");
+//		    	
+//		    	// Tarkista löytyykö käyttäjää
+//		    	if (userRepository.findByUsername(signupForm.getUsername()) == null) { 
+//		    		userRepository.save(newUser);
+//		    		return "login";
+//		    	}
+//		    	else {
+//	    			bindingResult.rejectValue("username", "err.username", "* username already exists");    	
+//	    			return "signupform";		    		
+//		    	}
+//    		}
+//    		else {
+//    			bindingResult.rejectValue("passwordCheck", "err.passCheck", "* passwords does not match");    	
+//    			return "signupform";
+//    		}
+// 	   } else {
+// 		   return "signupform";
+// 	   }
+//    }    
     
 }

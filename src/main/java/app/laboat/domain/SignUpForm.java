@@ -1,19 +1,20 @@
 package app.laboat.domain;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class SignUpForm {
-    @NotEmpty
-    @Size(min=6, max=50)
+    @NotNull
+    @Size(min=4, max=30, message = "* username must have 4-30 characters")
     private String username = "";
 
-    @NotEmpty
-    @Size(min=7, max=50)
+    @NotNull
+    @Size(min=4, max=30, message = "* password must have 4-30 characters")
     private String password = "";
 
-    @NotEmpty
-    @Size(min=7, max=30)
+    @NotNull
+    @Size(min=4, max=30, message = "* password must have 4-30 characters")
     private String passwordCheck = "";
 
     @NotEmpty
@@ -50,5 +51,6 @@ public class SignUpForm {
 	public void setRole(String role) {
 		this.role = role;
 	}
+    
     
 }

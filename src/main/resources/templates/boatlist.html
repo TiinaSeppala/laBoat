@@ -2,36 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
+    <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>    
+	<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/> 
+
     <title>LaBoat</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <!-- CSS EI TOIMI -->
-    <!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
-    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css"/>
-	<!-- <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" /> -->    
-    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 </head>
+
 <body>
-
-	<!-- EI TOIMI -->
-	 Logged: <span sec:authentication="${user.userName}"></span>
-	 Role: <span sec:authentication="principal.authorities"></span>
-
+	<!--  
 	<div class="col-md-4">
-		<h1>Boatlist</h1>
-			
-	
-	
-			
+		 Logged: <span sec:authentication="${user.userName}"></span>
+		 Role: <span sec:authentication="principal.authorities"></span>
 	</div>
+	-->
 	<div class="col-md-4">
-<!-- 		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3> -->
+		<h1>Boatlist</h1>		
 	</div>
+	
+	<div class="col-md-4">
+		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+		
+		
+	</div>
+	
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign out" class="btn btn-danger"/>
 		</form>
 	</div>
+	
     <table class="table table-striped">
 		<tr>
 		    <th>Name</th>
@@ -58,10 +59,5 @@
      </table>
      <br>
 	 <a href="/addboat" class="btn btn-success">Add new boat</a> 
-	 
-	 	
-	<!-- ohje: https://grokonez.com/java-integration/integrate-springboot-bootstrap-jquery -->
-    <script src="/jquery/jquery-3.3.1.min.js"></script>    
-	<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -8,10 +8,8 @@ import javax.persistence.Id;
 
 
 //Jokaisella tietokantaan tallennettavalla luokalla tulee olla annotaatio @Entity 
-//sekä @Id-annotaatiolla merkattu attribuutti, joka toimii tietokantataulun ensisijaisena avaimena.
 @Entity
-// @Table(name = "user")
-public class User /*extends AbstractPersistable<Long>*/ {
+public class User {
 	
     @Id
     // antaa id-kentän arvojen luomisen vastuun tietokannalle
