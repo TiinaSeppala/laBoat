@@ -11,28 +11,29 @@
 </head>
 
 <body>
-	<!--  
 	<div class="col-md-4">
-		 Logged: <span sec:authentication="${user.userName}"></span>
+		<p th:inline="text">Logged: <b>[[${#httpServletRequest.remoteUser}]]</b> 
+		<!--  
+		
+		NÄMÄ EI TOIMI, EIKÄ DELETE TOIMI
+		<p th:inline="text">Role: <b>[[${#httpServletRequest.isUserInRole("USER")}]]</b></p>
+			<div class="col-md-4">
+		 Logged: <span sec:authentication="${User.username}">nimi</span>
 		 Role: <span sec:authentication="principal.authorities"></span>
-	</div>
-	-->
-	<div class="col-md-4">
-		<h1>Boatlist</h1>		
-	</div>
-	
-	<div class="col-md-4">
-		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+		 </div>
 		
-		
+		-->
 	</div>
-	
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign out" class="btn btn-danger"/>
 		</form>
 	</div>
-	
+
+	<div class="col-md-4">
+		<h1>Boatlist</h1>		
+	</div>
+		
     <table class="table table-striped">
 		<tr>
 		    <th>Name</th>
@@ -54,10 +55,12 @@
     		<td th:text="${boat.location}"></td>
     		<td th:text="${boat.length}"></td>
     		<td th:text="${boat.width}"></td>
-			<td sec:authorize="hasAuthority('ADMIN')" ><a th:href="@{/deleteboat/{bID}(bID=${boat.bID})}" class="btn btn-danger">Delete</a></td>
+    		<!-- <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/deleteboat/{bID}(bID=${boat.bID})}" class="btn btn-danger">Delete</a></td> -->
+			<!-- <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deleteboat/{bID}(bID=${boat.bID})}" class="btn btn-danger">Delete</a></td> -->
+			<td><a th:href="@{/deleteboat/{bID}(bID=${boat.bID})}" class="btn btn-danger">Delete</a></td>
     	</tr>
      </table>
      <br>
-	 <a href="/addboat" class="btn btn-success">Add new boat</a> 
+	 <a href="/addboat" class="btn btn-danger">Add new boat</a> 
 </body>
 </html>

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import app.laboat.domain.Boat;
-import app.laboat.domain.BoatRepository;
-import app.laboat.domain.TypeRepository;
+import app.laboat.repository.BoatRepository;
+import app.laboat.repository.TypeRepository;
 
 @Controller
 public class BoatController {
@@ -70,11 +70,10 @@ public class BoatController {
         }
     }
     
-
-    
     //poisto
     @RequestMapping(value="/deleteboat/{bID}", method=RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public String deleteBoat(@PathVariable("bID") Long bID, Model model) {
     	boatRepository.deleteById(bID);
     	return "redirect:../boatlist";

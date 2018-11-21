@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import app.laboat.domain.SignUpForm;
 import app.laboat.domain.User;
-import app.laboat.domain.UserRepository;
+import app.laboat.repository.UserRepository;
 
 @Controller
 public class UserController {
@@ -31,13 +31,9 @@ public class UserController {
     }	
     
 
-// Luo uusi käyttäjä
-// Tarkista onko käyttäjä jo olemassa
-// Lomakkeen validointi
-// @param signupForm
-// @param bindingResult
-// @return
-
+	// Luo uusi käyttäjä
+	// Tarkista onko käyttäjä jo olemassa
+	// Lomakkeen validointi
     @RequestMapping(value = "saveuser", method = RequestMethod.POST)
     public String save(@Valid @ModelAttribute("signupform") SignUpForm signupForm, BindingResult bindingResult) {
     	if (!bindingResult.hasErrors()) { // virheiden validointi
@@ -68,42 +64,4 @@ public class UserController {
     	}
     	return "redirect:/login";    	
     }
-    
-    
-    
-    
-//    @RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-//    public String saveUser(@Valid @ModelAttribute("signupform") SignUpForm signupForm, BindingResult bindingResult) {
-//		
-// 	   if (!bindingResult.hasErrors()) {
-// 		// tarkista salasanojen mätsäys
-//    		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { 	
-//	    		String password = signupForm.getPassword();
-//		    	BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-//		    	String hashPassword = bc.encode(password);
-//	
-//		    	User newUser = new User();
-//		    	newUser.setPasswordHash(hashPassword);
-//		    	newUser.setUsername(signupForm.getUsername());
-//		    	newUser.setRole("USER");
-//		    	
-//		    	// Tarkista löytyykö käyttäjää
-//		    	if (userRepository.findByUsername(signupForm.getUsername()) == null) { 
-//		    		userRepository.save(newUser);
-//		    		return "login";
-//		    	}
-//		    	else {
-//	    			bindingResult.rejectValue("username", "err.username", "* username already exists");    	
-//	    			return "signupform";		    		
-//		    	}
-//    		}
-//    		else {
-//    			bindingResult.rejectValue("passwordCheck", "err.passCheck", "* passwords does not match");    	
-//    			return "signupform";
-//    		}
-// 	   } else {
-// 		   return "signupform";
-// 	   }
-//    }    
-    
 }

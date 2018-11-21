@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import app.laboat.service.UserDetailServiceImpl;
 
 @Configuration
@@ -17,65 +16,15 @@ import app.laboat.service.UserDetailServiceImpl;
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	/* BOOTSTRAP PITÄIS SAADA TOIMIMAAN
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/webjars/**").permitAll()
-		.antMatchers("/img/**")
-		.permitAll().anyRequest()
-		.authenticated()
-		.and()
-		.httpBasic()
-		.and()
-		.formLogin()
-		.loginPage("/login").permitAll();
-		http.csrf().disable();
-		
-	TAI	
-		
-	@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-          .addResourceHandler("/webjars/**")
-          .addResourceLocations("/webjars/");
-    }
-	*/
-	
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//			.authorizeRequests()
-//				.antMatchers("/webjars/**","/signup").permitAll()
-//				.and()
-//				.authorizeRequests()
-//				.antMatchers("/", "addboat", "saveboat", "boatlist").permitAll()
-//				.antMatchers("deleteboat/{bID}").hasRole("ADMIN")
-//				.anyRequest().authenticated()
-//				 .and()
-//			 .formLogin()
-//				 .loginPage("/login")
-//				 .defaultSuccessUrl("/boatlist")
-//				 .permitAll()
-//				 .and()
-//			  .logout()
-//				.permitAll();
-//				//.invalidateHttpSession(true); // Invalidate session
-//    }
-//    
-//    @Autowired
-//    private UserDetailServiceImpl userDetailsService;
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//    	auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-//    }
+	@Autowired
+	private UserDetailServiceImpl userDetailsService;
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        .authorizeRequests().antMatchers("/webjars/**").permitAll() // Enable css when logged out
+        .authorizeRequests().antMatchers("/webjars/**").permitAll() // CSS:lle pitää antaa lupa toimia koko ajan
         .and()
-        .authorizeRequests().antMatchers("/signup", "/saveuser").permitAll()
+        .authorizeRequests().antMatchers("/signup", "/saveuser").permitAll() //kaikilla mahdollisuus luoda uudet tunnukset
         .and()
         .authorizeRequests().anyRequest().authenticated()
         .and()
@@ -86,10 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
       .logout()
           .permitAll();
+          //.invalidateHttpSession(true); // Invalidate session
     }
     
-  @Autowired
-  private UserDetailServiceImpl userDetailsService;
+  
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
   	auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
